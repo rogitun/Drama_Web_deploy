@@ -1,8 +1,6 @@
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,8 +17,6 @@
 
   <title>삼육대학교 영어연극 장부</title>
 </head>
-
-
 <body>
   <!-- Header Section -->
   <header class="header">
@@ -38,15 +34,17 @@
           <li class="header__menuItem"><a href="{% url 'home' %}">연극 팀</a></li>
           <li class="header__menuItem"><a href="{% url 'post' %}">결제내역</a></li>
           <li class="header__menuItem"><a href="inbox.html">메세지</a></li>
-          <li class="header__menuItem"><a href="account.html">우리 팀 정보</a></li>
-          <li class="header__menuItem"><a href="login.html" class="btn btn--sub">Login/Sign Up</a></li>
+          <li class="header__menuItem"><a href="{% url 'account' %}">우리 팀 정보</a></li>
+
+          {% if request.user.is_authenticated %}
+          <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
+          {% else %}
+          <li class="header__menuItem"><a href="{% url 'login' %}" class="btn btn--sub">Login/Sign Up</a></li>
+          {% endif %}
         </ul>
       </nav>
     </div>
   </header>
-
-  <!-- Main Section -->
-  
 </body>
 {% block content %}
 

@@ -1,0 +1,88 @@
+{% extends 'main.html' %} 
+
+{% block content %} 
+
+{% if page == 'register' %} 
+
+<body>
+    <div class="auth">
+      <div class="card">
+        <div class="auth__header text-center">
+          <a href="/">
+            <img src="images/icon.svg" alt="icon" />
+          </a>
+          <h3>Account SignUp</h3>
+          <p>Register Your Team</p>
+        </div>
+
+        <form action="#" class="form auth__form" method="POST" enctype="multipart/form-data">
+          <!-- Input:Text -->
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form__field">
+            <label for="formInput#text">{{field.label}} </label>
+            {{field}}
+          </div>
+          {% endfor %}
+          <div class="auth__actions">
+            <input class="btn btn--sub btn--lg" type="submit" value="Sign  In" />
+          </div>
+        </form>
+        <div class="auth__alternative">
+          <p>Already have an Account?</p>
+          <a href="login.html">Log In</a>
+        </div>
+      </div>
+    </div>
+
+{% else %}
+
+<body>
+    <div class="auth">
+      <div class="card">
+        <div class="auth__header text-center">
+          <a href="/">
+            <img src="images/icon.svg" alt="icon" />
+          </a>
+          <h3>Account Login</h3>
+          <p>Hello Students, Welcome Back!</p>
+        </div>
+        <form action="#" class="form auth__form" method="POST">
+          {% csrf_token %}
+          <div class="form__field">
+            <label for="formInput#text">아아디: </label>
+            <input
+              class="input input--text"
+              id="formInput#text"
+              type="text"
+              name="user_id"
+              placeholder="아이디를 입력하세요"
+            />
+          </div>
+          <div class="form__field">
+            <label for="formInput#password">비밀번호: </label>
+            <input
+              class="input input--password"
+              id="formInput#passowrd"
+              type="password"
+              name="password"
+              placeholder="••••••••"
+            />
+          </div>
+          <div class="auth__actions">
+            <input class="btn btn--sub btn--lg" type="submit" value="Log In" />
+            <a href="forgetpassword.html">Forget Password?</a>
+          </div>
+        </form>
+        <div class="auth__alternative">
+            <p>{{message}}</p>
+          <p>Don’t have an Account?</p>
+          
+          <a href="{% url 'register' %}">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </body>
+
+{% endif %}
+{% endblock %}
