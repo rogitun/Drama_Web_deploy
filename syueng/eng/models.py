@@ -8,7 +8,7 @@ class Post(models.Model):
     owner = models.ForeignKey(Team,on_delete=CASCADE,null=True)
     title = models.CharField(max_length=200,null=True)
     image = models.ImageField(null=True,upload_to='posts/')
-    date = models.DateTimeField(auto_now=True,null=True,blank=False)
+    date = models.DateTimeField(null=True,blank=False)
     paid = models.IntegerField(null=True,blank=False)
     desc = models.CharField(max_length=256)
     created = models.DateTimeField(auto_now_add=True)

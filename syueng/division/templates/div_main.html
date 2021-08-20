@@ -35,7 +35,7 @@
           {% for team in teams %}
           <div class="column card">
             <div class="dev">
-              <a href="/profile.html" class="card__body">
+              <a href="{% url 'profile' team.id %}" class="card__body">
                 <div class="dev__profile">
                   <img class="avatar avatar--md" src="{{team.profile_image.url}}" alt="image" />
                   <div class="dev__meta">

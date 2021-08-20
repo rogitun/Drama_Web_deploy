@@ -29,24 +29,21 @@
           {% for p in posts %}
           <div class="column">
             <div class="card project">
-              <a href="single-project.html" class="project">
-                <img class="project__thumbnail" src="images/project-a.png" alt="project thumbnail" />
+              <a href="{% url 'view-post' p.id %}" class="project">
+                <img class="project__thumbnail" src="{{p.image.url}}" alt="project thumbnail" />
                 <div class="card__body">
                   <h3 class="project__title">{{p.title}}</h3>
                   <p><a class="project__author" href="profile.html">{{p.owner.name}}</a></p>
                   <p class="project--rating">
-                    <span style="font-weight: bold;">98%</span> Postitive
-                    Feedback (72 Votes)
+                    <span style="font-weight: bold;">{{p.date}}</span>
                   </p>
                   <div class="project__tags">
                     <span class="tag tag--pill tag--main">
-                      <small>NextJS</small>
-                    </span>
-                    <span class="tag tag--pill tag--main">
-                      <small>GraphQL</small>
-                    </span>
-                    <span class="tag tag--pill tag--main">
-                      <small>TypeScript</small>
+                      {% if days <= 1 %}
+                      <small>New!</small> 
+                      {% else %} 
+                      <small>{{p.date.day}}</small> 
+                      {% endif %}
                     </span>
                   </div>
                 </div>

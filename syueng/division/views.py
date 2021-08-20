@@ -6,6 +6,7 @@ from .forms import CustomTeamForm,CustomUserForm
 # Create your views here.
 def home(request):
     teams = Team.objects.all()
+
     return render(request,'div_main.html',{'teams':teams})
 
 def loginTeam(request):
@@ -67,6 +68,12 @@ def updateTeam(request,pk):
 
 def accountView(request):
     team = request.user.team
-
-    context = {'team':team}
+    post = team.post_set.all()
+    context = {'team':team,'post':post}
     return render(request,'div_account.html',context)
+
+def profileView(request,pk):
+    profile = Team.objects.get(id=pk)
+    post = profile.post_set.all()
+    context = {'profile':profile,'post':post}
+    return render(request,'div_profile.html',context)
