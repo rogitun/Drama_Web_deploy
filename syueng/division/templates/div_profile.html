@@ -35,17 +35,17 @@
           </div>
           <div class="devInfo">
             <h3 class="devInfo__title">결제 내역</h3>
+            
             <div class="grid grid--two">
-
 
               {% for p in post %}
               <div class="column">
                 <div class="card project">
-                  <a href="{% url 'view-post' p.id %}" class="project">
-                    <img class="project__thumbnail" src="{{p.image.url}}" alt="project thumbnail" />
+                  <!-- <a href="{% url 'view-post' p.id %}" class="project">
+                    <img class="project__thumbnail" src="{{p.image.url}}" alt="project thumbnail" /> -->
                     <div class="card__body">
                       <h3 class="project__title">{{p.title}}</h3>
-                      <p><a class="project__author" href="{% url 'profile' p.owner.id %}">By {{p.owner.captain}}</a></p>
+                      <p><a class="project__author" href="{% url 'view-post' p.id %}">By {{p.owner.captain}}</a></p>
                       <p class="project--rating">
                         <span style="font-weight: bold;">결제일 </span>{{p.date}}
                       </p>
@@ -59,7 +59,9 @@
                 </div>
               </div>
               {% endfor %}
+              
             </div>
+            {% include 'pagination.html' with queries=post page_range=page_range%}
           </div>
         </div>
       </div>

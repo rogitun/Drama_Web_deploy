@@ -2,10 +2,16 @@ from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
 from datetime import date, datetime
+from .utils import paginatePost
+
 # Create your views here.
 def post(request):
-    posts = Post.objects.all()
-    return render(request,'posts.html',{'posts':posts})
+    posts = Post.objects.all().order_by('-created')
+    posts,page_range = paginatePost(request,posts,6)
+    
+    context = {'posts':posts,'page_range':page_range}
+
+    return render(request,'posts.html',context)
 
 def createPost(request):
     user = request.user.team
@@ -25,7 +31,19 @@ def createPost(request):
 def viewPost(request,pk):
     post = Post.objects.get(id=pk)
     days = datetime.now().day - post.date.day
-    context = {'post':post,'days':days}
+    reviews = post.review_set.all()
+    form = CustomReviewForm()
+
+    if request.method == 'POST':
+        form = CustomReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.owner = request.user.team
+            review.linked = post
+            review.save()
+            return redirect('view-post',post.id)
+
+    context = {'post':post,'days':days,'form':form,'reviews':reviews}
     return render(request,'view_post.html',context)
 
 def deletePost(request,pk):

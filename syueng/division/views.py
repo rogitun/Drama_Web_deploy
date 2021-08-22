@@ -3,11 +3,13 @@ from .models import Team
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
 from .forms import CustomTeamForm,CustomUserForm
+from .utils import *
 # Create your views here.
 def home(request):
     teams = Team.objects.all()
-
-    return render(request,'div_main.html',{'teams':teams})
+    teams,page_range = paginateTeam(request,teams,2)
+    
+    return render(request,'div_main.html',{'teams':teams,'page_range':page_range})
 
 def loginTeam(request):
     message=  ''
@@ -69,11 +71,14 @@ def updateTeam(request,pk):
 def accountView(request):
     team = request.user.team
     post = team.post_set.all()
-    context = {'team':team,'post':post}
+    post,page_range = paginateTeam(request,post,2)
+    context = {'team':team,'post':post,'page_range':page_range}
     return render(request,'div_account.html',context)
 
 def profileView(request,pk):
     profile = Team.objects.get(id=pk)
     post = profile.post_set.all()
-    context = {'profile':profile,'post':post}
+    post,page_range = paginateTeam(request,post,4)
+
+    context = {'profile':profile,'post':post,'page_range':page_range}
     return render(request,'div_profile.html',context)

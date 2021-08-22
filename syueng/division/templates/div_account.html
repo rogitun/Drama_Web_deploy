@@ -51,6 +51,7 @@
             {% endfor %}
             
           </table>
+          {% include 'pagination.html' with queries=post page_range=page_range %}
         </div>
       </div>
     </div>

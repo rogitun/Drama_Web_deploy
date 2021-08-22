@@ -1,0 +1,20 @@
+
+{% if queries.has_other_pages %}
+<div class="pagination">
+    <ul class="container">
+      {% if queries.has_previous %} 
+      <li><a href="?page={{queries.previous_page_number}}" class="btn page-link">&#10094; Prev</a></li>
+      {% endif %}
+      {% for number in page_range %}
+        {% if number == queries.number %}
+        <li><a href="?page={{number}}" class="btn page-link btn--sub">{{number}}</a></li>
+        {% else %}
+        <li><a href="?page={{number}}" class="btn page-link">{{number}}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if queries.has_next %}
+      <li><a href="?page={{queries.next_page_number}}" class="btn">Next &#10095;</a></li>
+      {% endif %}
+    </ul>
+</div>
+{% endif %}

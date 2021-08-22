@@ -30,29 +30,32 @@
             <h3 class="singleProject__subtitle">Feedback</h3>
            
             <form class="form" action="#" method="POST">
-              
+              {% csrf_token %}
               <div class="form__field">
                 <label for="formInput#textarea">Comments: </label>
-                <textarea class="input input--textarea" name="message" id="formInput#textarea"
-                  placeholder="Write your comments here..."></textarea>
+                {{form}}
               </div>
               <input class="btn btn--sub btn--lg" type="submit" value="Comments" />
             </form>
+
+            
             <div class="commentList">
+              {% for r in reviews %}
               <div class="comment">
-                <a href="profile.html">
+                <a href="{% url 'profile' r.owner.id %}">
                   <img class="avatar avatar--md"
-                    src="{% static 'images/profiles/user-default.png' %}" alt="user" />
+                    src="{{r.owner.profile_image.url}}" alt="user" />
                 </a>
                 <div class="comment__details">
-                  <a href="profile.html" class="comment__author">댓글 작성자</a>
+                  <a href="{% url 'profile' r.owner.id %}" class="comment__author">{{r.owner.name}}({{r.owner.captain}})</a>
                   <p class="comment__info">
-                    댓글
+                    {{r.desc}}
                   </p>
                 </div>
               </div>
-             
+              {% endfor %}
             </div>
+
           </div>
         </div>
       </div>

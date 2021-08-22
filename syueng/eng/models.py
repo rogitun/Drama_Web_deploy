@@ -12,3 +12,16 @@ class Post(models.Model):
     paid = models.IntegerField(null=True,blank=False)
     desc = models.CharField(max_length=256)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+class Review(models.Model):
+    id = models.IntegerField(primary_key=True)
+    owner = models.ForeignKey(Team,on_delete=CASCADE,null=True)
+    linked = models.ForeignKey(Post,on_delete=CASCADE,null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    desc = models.TextField()
+
+    def __str__(self):
+        return self.desc
