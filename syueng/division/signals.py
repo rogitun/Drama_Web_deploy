@@ -3,10 +3,12 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Team
 
+from django.core.mail import send_mail
+from django.conf import settings
+
 def createUpdate(sender,instance,created,**kwargs):
     print(kwargs,'instance',instance,'created:',created)
     if created:
-        print('생성')
         user = instance
         team = Team.objects.create(
             user = user,
@@ -15,6 +17,18 @@ def createUpdate(sender,instance,created,**kwargs):
             name = user.first_name,
             captain = user.last_name,
         )
+
+        subject = "연극 홈페이지 가입"
+        message = '정상적으로 가입 되었습니다.'
+
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [team.email],
+            fail_silently=False,
+        )
+
 
 def updateTeam(sender,instance,created,**kwargs):
     print(kwargs)

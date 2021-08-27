@@ -33,7 +33,7 @@
         <ul class="header__menu">
           <li class="header__menuItem"><a href="{% url 'home' %}">연극 팀</a></li>
           <li class="header__menuItem"><a href="{% url 'post' %}">결제내역</a></li>
-          <li class="header__menuItem"><a href="inbox.html">메세지</a></li>
+          <li class="header__menuItem"><a href="{% url 'msg-box' %}">메세지</a></li>
           <li class="header__menuItem"><a href="{% url 'account' %}">우리 팀 정보</a></li>
 
           {% if request.user.is_authenticated %}
@@ -49,4 +49,8 @@
 {% block content %}
 
 {% endblock %}
+
+<script src="{% static 'uikit/app.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
 </html>

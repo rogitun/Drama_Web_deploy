@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from .models import Team
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
-from .forms import CustomTeamForm,CustomUserForm
+from .forms import CustomTeamForm,CustomUserForm, MessageForm
 from .utils import *
 # Create your views here.
 def home(request):
@@ -82,3 +82,48 @@ def profileView(request,pk):
 
     context = {'profile':profile,'post':post,'page_range':page_range}
     return render(request,'div_profile.html',context)
+
+def msgBox(request):
+    team = request.user.team
+    msg_snd = team.sender.all()
+    msg_rcv = team.receiver.all()
+    snd_count = msg_rcv.filter(is_read=False).count()
+
+
+    context = {'msg_snd':msg_snd,'msg_rcv':msg_rcv,'snd_count':snd_count}
+    return render(request,'message_box.html',context)
+
+def sendView(request,pk):
+    team = request.user.team
+    msg_snd = team.sender.get(id=pk)
+    
+    context = {'msg':msg_snd}
+    return render(request,'message_view.html',context)
+
+def recvView(request,pk):
+    team = request.user.team
+    msg_rcv = team.receiver.get(id=pk)
+
+    if msg_rcv.is_read == False:
+        msg_rcv.is_read = True
+        msg_rcv.save()
+
+    context = {'msg':msg_rcv}
+    return render(request,'message_view.html',context)
+
+def msgSend(request,pk):
+    whom = Team.objects.get(id=pk)
+    who = request.user.team
+    form = MessageForm()
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            msg = form.save(commit=False)
+            msg.sender = who
+            msg.receiver = whom
+            msg.name = who.captain
+            msg.save()
+            return redirect('profile',whom.id)
+
+    context = {'form':form}
+    return render(request,'message_send.html',context)

@@ -2,14 +2,15 @@ from django.shortcuts import redirect, render
 from .models import *
 from .forms import *
 from datetime import date, datetime
-from .utils import paginatePost
+from .utils import paginatePost, searchPost
 
 # Create your views here.
 def post(request):
-    posts = Post.objects.all().order_by('-created')
+    posts,search_text = searchPost(request)
+    # posts = Post.objects.all().order_by('-created')
     posts,page_range = paginatePost(request,posts,6)
     
-    context = {'posts':posts,'page_range':page_range}
+    context = {'posts':posts,'page_range':page_range,'search_text':search_text}
 
     return render(request,'posts.html',context)
 

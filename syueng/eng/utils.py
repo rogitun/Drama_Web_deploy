@@ -1,6 +1,7 @@
 from django.core import paginator
 from .models import *
 from django.core.paginator import Paginator,EmptyPage
+from django.db.models import Q
 
 def paginatePost(request,posts,results):
     page = request.GET.get('page',1)
@@ -24,3 +25,17 @@ def paginatePost(request,posts,results):
     
 
     return posts,page_range
+
+def searchPost(request):
+    search_text = ''
+
+    if request.GET.get('text'):
+        search_text = request.GET.get('text')
+        print('찾는 내용 : ',search_text)
+
+    posts = Post.objects.filter(
+        Q(title__icontains=search_text)|
+        Q(owner__name__icontains=search_text)
+    )
+
+    return posts,search_text

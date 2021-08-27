@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <main class="inbox my-xl">
+    <div class="content-box">
+      <h3 class="inbox__title">받은 메세지(<span>{{snd_count}}</span>)</h3>
+      <ul class="messages">
+          {% for msg in msg_rcv %}
+          {% if msg.is_read == False %}
+        <li class="message message--unread">
+            {% else %}
+        <li class="message">
+            {% endif %}
+          <a href="{% url 'view-recv' msg.id %}">
+            <span class="message__author">{{msg.sender.captain}}</span>
+            <span class="message__subject">{{msg.title}}</span>
+            <span class="message__date">{{msg.send_date}}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <br>
+    <div class="content-box">
+        <h3 class="inbox__title">보낸 메세지</h3>
+        <ul class="messages">
+            {% if msg_snd %}
+            {% for msg in msg_snd %}
+
+          <li class="message">
+            <a href="{% url 'view-send' msg.id %}">
+              <span class="message__author">{{msg.sender.captain}}</span>
+              <span class="message__subject">{{msg.title}}</span>
+              <span class="message__date">{{msg.send_date}}</span>
+            </a>
+          </li>
+
+          {% endfor %}
+          {% else %}
+          <li class="message">
+            <span class="message__subject">메세지 없음</span>
+        </li>
+        {% endif %}
+        </ul>
+      </div>
+  </main>
+{% endblock %}
