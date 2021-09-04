@@ -18,8 +18,8 @@ def createUpdate(sender,instance,created,**kwargs):
             captain = user.last_name,
         )
 
-        subject = "연극 홈페이지 가입"
-        message = '정상적으로 가입 되었습니다.'
+        subject = "Welcome to the Greatest Show"
+        message = '삼육대학교 영어연극 홈페이지 가입을 진심으로 축하드립니다. 많은 노오오력을 통해 A+를 받을 수 있도록^^'
 
         send_mail(
             subject,
