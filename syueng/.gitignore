@@ -1,5 +1,5 @@
 db.sqlite3
-secrets.json
+# secrets.json
 *.log
 *.pot
 *.pyc

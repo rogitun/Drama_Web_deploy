@@ -154,3 +154,9 @@ STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AWS_ACCESS_KEY_ID = 'AKIARYBGS2R7EHSKROTC'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'hansel'
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+AWS_S3_REGION_NAME = 'ap-northeast-2'
