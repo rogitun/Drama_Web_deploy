@@ -6,10 +6,10 @@ from django.db.models.deletion import CASCADE
 # Create your models here.
 
 class Team(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,blank=True)
     id = models.IntegerField(primary_key=True)
     username = models.CharField(null=True,max_length=100)
-    name = models.CharField(null=True,max_length=100)
+    name = models.CharField(max_length=100)
     captain = models.CharField(null=True,max_length=100)
     short_intro = models.CharField(null=True,blank=True,max_length=256)
     email = models.EmailField(null=True)
